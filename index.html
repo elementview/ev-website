@@ -65,7 +65,7 @@
 
     /* Sections */
     section{padding:64px 0;border-top:1px solid var(--line)}
-    #comments{border-top:none;padding-top:56px}
+    #feedback{border-top:none;padding-top:56px}
     .section-title{text-align:center;max-width:640px;margin:0 auto 44px}
     .section-title .kicker{display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--primary);margin-bottom:8px;font-weight:600}
     .section-title h2{font-size:clamp(24px,3vw,32px);margin:0 0 10px;letter-spacing:-.3px}
@@ -126,7 +126,7 @@
       <div class="nav-links">
         <a href="#how" data-i18n="nav_how"></a>
         <a href="#download" data-i18n="nav_download"></a>
-        <a href="#comments" data-i18n="nav_comments"></a>
+        <a href="#feedback" data-i18n="nav_feedback"></a>
       </div>
       <div class="lang-switch" id="langSwitch">
         <button data-lang="zh-CN" class="active">中文</button>
@@ -201,34 +201,24 @@
       </div>
       <div class="changelog">
         <div class="cl-item">
-          <span class="cl-ver">v—</span>
-          <span class="cl-desc placeholder" data-i18n="cl_placeholder"></span>
+          <span class="cl-ver">v26.9.0</span>
+          <span class="cl-desc" data-i18n="cl_v2690"></span>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- COMMENTS (Disqus, guest comments — no login needed) -->
-  <!--
-    评论区方案：Disqus（支持访客评论，访客无需注册/登录 GitHub，随便填昵称邮箱即可留言）
-    启用步骤：
-      1) 到 https://disqus.com/admin/install/ 注册并创建站点，记下你的站点 shortname。
-      2) 把下方 CONFIG.shortname 替换为你的 shortname。
-      3) 在 Disqus 后台 Settings → Community 中开启 “Guest commenting”（访客评论）。
-      4) Disqus 需要绑定一个可访问的域名；本地预览时可用 GitHub Pages 站点或临时分配域名。
-    备选：若你不介意用户需登录，可换成 Giscus（GitHub Discussions 托管，数据归自己）。
-  -->
-  <section id="comments">
+  <!-- FEEDBACK -->
+  <section id="feedback">
     <div class="wrap">
       <div class="section-title">
-        <span class="kicker" data-i18n="cm_kicker"></span>
-        <h2 data-i18n="cm_title"></h2>
-        <p data-i18n="cm_sub"></p>
+        <span class="kicker" data-i18n="fb_kicker"></span>
+        <h2 data-i18n="fb_title"></h2>
+        <p data-i18n="fb_sub"></p>
       </div>
-      <div id="disqus_thread"></div>
-      <noscript>
-        <p style="text-align:center;color:var(--ink3,#768390)" data-i18n="noscript"></p>
-      </noscript>
+      <div style="text-align:center">
+        <a class="btn btn-primary" href="https://github.com/elementview/EV-Revit-Plugin/discussions" target="_blank" rel="noopener noreferrer"><span data-i18n="fb_cta"></span><span class="arrow">↗</span></a>
+      </div>
     </div>
   </section>
 
@@ -244,7 +234,7 @@
           <h4 data-i18n="ft_nav"></h4>
           <a href="#how" data-i18n="nav_how"></a>
           <a href="#download" data-i18n="nav_download"></a>
-          <a href="#comments" data-i18n="nav_comments"></a>
+          <a href="#feedback" data-i18n="nav_feedback"></a>
         </div>
         <p style="max-width:340px;font-size:13px;color:var(--ink3,#768390)" data-i18n="ft_about"></p>
       </div>
@@ -255,7 +245,7 @@
   <script>
     const I18N = {
       "zh-CN": {
-        nav_how:"使用流程", nav_download:"下载", nav_comments:"留言",
+        nav_how:"使用流程", nav_download:"下载", nav_feedback:"反馈",
         hero_badge:"轻量 · 免费 · 零门槛查看",
         hero_title:"Revit 模型，一键导出为<br>无需安装的 3D 查看器",
         hero_sub:"ElementView 是一个轻量化的 3D viewer。从 Revit 导出的模型直接是一个独立可执行文件，查看方不需要安装 Revit、也不需要安装任何其他软件，双击即可查看。",
@@ -268,12 +258,12 @@
         dl_kicker:"下载", dl_title:"立即获取 ElementView", dl_sub:"下载最新版 Revit 插件，把模型变成独立的 3D 查看器。",
         dl_cta:"前往 GitHub Releases 下载", dl_need:"无需登录 · 免费 · Windows",
         cl_kicker:"更新日志", cl_title:"近期更新", cl_placeholder:"更新日志占位，发布后可在此补充。",
-        cm_kicker:"社区反馈", cm_title:"留下你的建议", cm_sub:"你的反馈将帮助我们持续优化 ElementView。评论区无需登录，人人可发言。",
-        noscript:"请启用 JavaScript 以查看评论区。",
+        cl_v2690:"Revit 一键导出，独立 EXE 双击即用。",
+        fb_kicker:"反馈", fb_title:"分享你的建议", fb_sub:"有想法或遇到问题？欢迎到 GitHub Discussions 提交反馈，你的意见将帮助我们持续优化 ElementView。", fb_cta:"前往 GitHub Discussions 反馈",
         ft_repo:"插件仓库", ft_nav:"导航", ft_about:"ElementView：让 Revit 模型以轻量、独立、零安装的方式交付给每一个人。"
       },
       "en": {
-        nav_how:"How it works", nav_download:"Download", nav_comments:"Feedback",
+        nav_how:"How it works", nav_download:"Download", nav_feedback:"Feedback",
         hero_badge:"Lightweight · Free · Zero-install viewing",
         hero_title:"Export Revit models to a 3D viewer<br>that needs no installation",
         hero_sub:"ElementView is a lightweight 3D viewer. Models exported from Revit become a standalone executable — recipients need neither Revit nor any other software. Just double-click and it runs.",
@@ -286,8 +276,8 @@
         dl_kicker:"Download", dl_title:"Get ElementView now", dl_sub:"Download the latest Revit plugin and turn models into standalone 3D viewers.",
         dl_cta:"Go to GitHub Releases", dl_need:"No sign-up · Free · Windows",
         cl_kicker:"Changelog", cl_title:"Recent updates", cl_placeholder:"Changelog placeholder — fill in after a release.",
-        cm_kicker:"Community", cm_title:"Share your feedback", cm_sub:"Your input helps us make ElementView better. No login required to comment.",
-        noscript:"Please enable JavaScript to view comments.",
+        cl_v2690:"One-click Revit export into a standalone EXE — just double-click and it runs.",
+        fb_kicker:"Feedback", fb_title:"Share your feedback", fb_sub:"Have ideas or run into issues? Open a discussion on GitHub — your feedback helps us make ElementView better.", fb_cta:"Open GitHub Discussions",
         ft_repo:"Plugin repository", ft_nav:"Navigate", ft_about:"ElementView: deliver Revit models as lightweight, standalone, zero-install experiences for everyone."
       }
     };
@@ -309,16 +299,6 @@
     let saved=""; try{ saved = localStorage.getItem("ev-lang")||""; }catch(e){}
     applyLang(saved && I18N[saved] ? saved : "zh-CN");
 
-    // ---- Disqus (guest comments, no login required) ----
-    var EV_DISQUS = {
-      shortname: "your-disqus-shortname" // TODO: replace with your Disqus shortname
-    };
-    (function(){
-      var d=document, s=d.createElement("script");
-      s.src="https://"+EV_DISQUS.shortname+".disqus.com/embed.js";
-      s.setAttribute("data-timestamp", +new Date());
-      (d.head||d.body).appendChild(s);
-    })();
   </script>
 </body>
 </html>
