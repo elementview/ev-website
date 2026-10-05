@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="ElementView — 轻量化 3D viewer：Revit 模型一键导出为独立 EXE 或 HTML 网页，查看方无需安装任何软件。Lightweight 3D viewer: export Revit models to a standalone EXE or HTML page with zero installation required." />
+  <meta name="description" content="ElementView — 轻量化 3D viewer：Revit 模型一键导出为独立 EXE 或 HTML 网页，查看方无需安装任何软件。支持毫米级测量、标注、剖切、漫游与 PDF 导出。Lightweight 3D viewer: export Revit models to a standalone EXE or HTML page with zero installation required." />
   <title>ElementView · 轻量化 3D Viewer</title>
   <link rel="icon" type="image/svg+xml" href="assets/elementview-logo.svg" />
   <style>
@@ -23,6 +23,7 @@
     a:hover{text-decoration:underline}
     img{max-width:100%;display:block}
     .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+    .wrap-wide{max-width:1600px;margin:0 auto;padding:0 32px}
 
     /* Nav */
     nav{position:sticky;top:0;z-index:50;background:rgba(14,17,22,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -43,6 +44,7 @@
       radial-gradient(900px 420px at 15% -10%, rgba(79,109,245,.18), transparent 60%),
       radial-gradient(700px 380px at 90% 0%, rgba(63,185,80,.10), transparent 60%), var(--bg)}
     .hero-grid{display:flex;flex-direction:column;align-items:center;text-align:center;gap:36px}
+    header.hero .wrap{max-width:1440px}
     .hero-copy{max-width:760px}
     .badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2,#adbac7);background:var(--surface);border:1px solid var(--line);padding:6px 14px;border-radius:999px;margin-bottom:14px}
     .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
@@ -71,12 +73,20 @@
     .section-title h2{font-size:clamp(24px,3vw,32px);margin:0 0 10px;letter-spacing:-.3px}
     .section-title p{color:var(--ink2,#adbac7);margin:0}
 
-    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step}
-    .step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px 22px}
-    .step::before{counter-increment:step;content:counter(step,decimal-leading-zero);position:absolute;top:18px;right:18px;font-family:var(--font-mono);font-size:26px;font-weight:700;color:var(--primary);opacity:.3}
-    .step h3{margin:0 0 6px;font-size:17px}
-    .step p{margin:0;color:var(--ink2,#adbac7);font-size:14px}
-    .step .tag{display:inline-block;margin-top:12px;font-size:12px;font-family:var(--font-mono);color:var(--gold);border:1px solid var(--line);padding:2px 8px;border-radius:6px}
+    /* Features */
+    #features{padding-bottom:24px}
+    .feature{display:grid;grid-template-columns:1.7fr 1fr;gap:56px;align-items:center;padding:40px 0}
+    .feature+.feature{border-top:1px solid var(--line)}
+    .feature:nth-of-type(even){grid-template-columns:1fr 1.7fr}
+    .feature:nth-of-type(even) .feature-img{order:2}
+    .feature-img{position:relative;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface2);overflow:hidden;box-shadow:var(--glow);line-height:0;transition:transform .3s ease, box-shadow .3s ease}
+    .feature-img img{width:100%;height:auto;display:block}
+    .feature:hover .feature-img{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(79,109,245,.4), 0 30px 70px -24px rgba(0,0,0,.7), 0 0 40px -10px rgba(79,109,245,.35)}
+    .feature-info{max-width:380px}
+    .feature-info .num{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary);opacity:.9;letter-spacing:1px}
+    .feature-info h3{margin:8px 0 10px;font-size:clamp(20px,2.2vw,25px);letter-spacing:-.3px}
+    .feature-info p{margin:0;color:var(--ink2,#adbac7);font-size:15px}
+    .feature-info .tag{display:inline-block;margin-top:14px;font-size:12px;font-family:var(--font-mono);color:var(--gold);border:1px solid var(--line);padding:2px 10px;border-radius:6px}
 
     #download{background:radial-gradient(800px 300px at 50% 120%, rgba(79,109,245,.16), transparent 70%), var(--bg)}
     .download-panel{max-width:720px;margin:44px auto 0;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:44px 34px;box-shadow:var(--glow)}
@@ -87,13 +97,6 @@
     .need{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3,#768390)}
     .need .checkb{color:var(--gold)}
 
-    .changelog{max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-    .cl-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
-    .cl-item:last-child{border-bottom:none}
-    .cl-ver{font-family:var(--font-mono);color:var(--primary);font-size:13px;min-width:90px}
-    .cl-desc{color:var(--ink2,#adbac7);font-size:14px}
-    .placeholder{color:var(--ink3,#768390);font-style:italic}
-
     footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--ink3,#768390);font-size:14px}
     .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     .foot-col h4{color:var(--ink2,#adbac7);margin:0 0 10px;font-size:14px}
@@ -102,11 +105,13 @@
 
     @media (max-width:900px){
       .hero-grid{gap:28px}
-      .steps{grid-template-columns:1fr 1fr}
+      .feature{grid-template-columns:1fr;gap:20px;padding:32px 0}
+      .feature:nth-of-type(even) .feature-img{order:0}
+      .feature-info{max-width:none}
+      .wrap-wide{padding:0 20px}
     }
     @media (max-width:640px){
       .hero{padding:48px 0}
-      .steps{grid-template-columns:1fr}
       nav .wrap{gap:12px}
       .nav-links a{display:none}
       .btn{width:100%;justify-content:center}
@@ -124,7 +129,7 @@
         <span>ElementView</span>
       </a>
       <div class="nav-links">
-        <a href="#how" data-i18n="nav_how"></a>
+        <a href="#features" data-i18n="nav_features"></a>
         <a href="#download" data-i18n="nav_download"></a>
         <a href="#feedback" data-i18n="nav_feedback"></a>
       </div>
@@ -143,14 +148,13 @@
         <h1 data-i18n="hero_title"></h1>
         <p class="sub" data-i18n="hero_sub"></p>
         <div class="cta">
-          <a class="btn btn-primary" href="https://github.com/elementview/EV-Revit-Plugin/releases" target="_blank" rel="noopener noreferrer">
+          <a class="btn btn-primary" href="#download">
             <span data-i18n="hero_dl_download"></span><span class="arrow">→</span>
           </a>
-          <a class="btn btn-ghost" href="#how" data-i18n="hero_cta_how"></a>
+          <a class="btn btn-ghost" href="#features" data-i18n="hero_cta_features"></a>
         </div>
         <div class="hero-meta">
           <span style="color:var(--ink3,#768390)"><span data-i18n="hero_meta_revit"></span><b style="color:var(--ink2,#adbac7)">Revit 2020 – 2027</b></span>
-          <span style="color:var(--ink3,#768390);margin-left:14px"><span data-i18n="hero_meta_version"></span><b style="color:var(--ink2,#adbac7)">v26.9.2</b></span>
         </div>
       </div>
 
@@ -160,18 +164,65 @@
     </div>
   </header>
 
-  <main class="wrap">
-    <!-- HOW -->
-    <section id="how">
+  <main>
+    <!-- FEATURES -->
+    <section id="features">
+      <div class="wrap-wide">
       <div class="section-title">
-        <span class="kicker" data-i18n="how_kicker"></span>
-        <h2 data-i18n="how_title"></h2>
-        <p data-i18n="how_sub"></p>
+        <span class="kicker" data-i18n="ft_kicker"></span>
+        <h2 data-i18n="ft_title"></h2>
+        <p data-i18n="ft_sub"></p>
       </div>
-      <div class="steps">
-        <div class="step"><h3 data-i18n="how1_title"></h3><p data-i18n="how1_desc"></p><span class="tag" data-i18n="how1_tag"></span></div>
-        <div class="step"><h3 data-i18n="how2_title"></h3><p data-i18n="how2_desc"></p><span class="tag" data-i18n="how2_tag"></span></div>
-        <div class="step"><h3 data-i18n="how3_title"></h3><p data-i18n="how3_desc"></p><span class="tag" data-i18n="how3_tag"></span></div>
+
+      <div class="feature">
+        <div class="feature-img"><img src="assets/measure.png" alt="ElementView — measure" loading="lazy" /></div>
+        <div class="feature-info">
+          <span class="num">01</span>
+          <h3 data-i18n="f_measure_title"></h3>
+          <p data-i18n="f_measure_desc"></p>
+          <span class="tag" data-i18n="f_measure_tag"></span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-img"><img src="assets/crop.png" alt="ElementView — section box" loading="lazy" /></div>
+        <div class="feature-info">
+          <span class="num">02</span>
+          <h3 data-i18n="f_crop_title"></h3>
+          <p data-i18n="f_crop_desc"></p>
+          <span class="tag" data-i18n="f_crop_tag"></span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-img"><img src="assets/roam.png" alt="ElementView — walkthrough" loading="lazy" /></div>
+        <div class="feature-info">
+          <span class="num">03</span>
+          <h3 data-i18n="f_roam_title"></h3>
+          <p data-i18n="f_roam_desc"></p>
+          <span class="tag" data-i18n="f_roam_tag"></span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-img"><img src="assets/markup.png" alt="ElementView — markup" loading="lazy" /></div>
+        <div class="feature-info">
+          <span class="num">04</span>
+          <h3 data-i18n="f_markup_title"></h3>
+          <p data-i18n="f_markup_desc"></p>
+          <span class="tag" data-i18n="f_markup_tag"></span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-img"><img src="assets/pdf.png" alt="ElementView — PDF export" loading="lazy" /></div>
+        <div class="feature-info">
+          <span class="num">05</span>
+          <h3 data-i18n="f_pdf_title"></h3>
+          <p data-i18n="f_pdf_desc"></p>
+          <span class="tag" data-i18n="f_pdf_tag"></span>
+        </div>
+      </div>
       </div>
     </section>
 
@@ -185,37 +236,14 @@
         </div>
         <div class="download-panel">
           <div class="big-cta">
-            <a class="btn btn-primary btn-xl" href="https://github.com/elementview/EV-Revit-Plugin/releases" target="_blank" rel="noopener noreferrer">
-              <span data-i18n="dl_cta"></span><span class="arrow">↗</span>
+            <a class="btn btn-primary btn-xl" href="https://evexporter-revit-1302447683.cos.ap-guangzhou.myqcloud.com/ElementViewExporter-Revit-Setup.exe">
+              <span data-i18n="dl_cta_setup"></span><span class="arrow">↓</span>
+            </a>
+            <a class="btn btn-ghost btn-xl" href="https://evexporter-revit-1302447683.cos.ap-guangzhou.myqcloud.com/Sample.exe">
+              <span data-i18n="dl_cta_sample"></span><span class="arrow">↓</span>
             </a>
             <p class="need"><span class="checkb">✓</span><span data-i18n="dl_need"></span></p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHANGELOG -->
-    <section id="changelog">
-      <div class="section-title">
-        <span class="kicker" data-i18n="cl_kicker"></span>
-        <h2 data-i18n="cl_title"></h2>
-      </div>
-      <div class="changelog">
-        <div class="cl-item">
-          <span class="cl-ver">v26.9.2</span>
-          <span class="cl-desc" data-i18n="cl_v2692"></span>
-        </div>
-        <div class="cl-item">
-          <span class="cl-ver">v26.9.1</span>
-          <span class="cl-desc" data-i18n="cl_v2691"></span>
-        </div>
-        <div class="cl-item">
-          <span class="cl-ver">v26.9.0</span>
-          <span class="cl-desc" data-i18n="cl_v2690"></span>
-        </div>
-        <div class="cl-item">
-          <span class="cl-ver">v26.8.0</span>
-          <span class="cl-desc" data-i18n="cl_v2680"></span>
         </div>
       </div>
     </section>
@@ -245,7 +273,7 @@
         </div>
         <div class="foot-links">
           <h4 data-i18n="ft_nav"></h4>
-          <a href="#how" data-i18n="nav_how"></a>
+          <a href="#features" data-i18n="nav_features"></a>
           <a href="#download" data-i18n="nav_download"></a>
           <a href="#feedback" data-i18n="nav_feedback"></a>
         </div>
@@ -258,43 +286,58 @@
   <script>
     const I18N = {
       "zh-CN": {
-        nav_how:"使用流程", nav_download:"下载", nav_feedback:"反馈",
+        nav_features:"核心功能", nav_download:"下载", nav_feedback:"反馈",
         hero_badge:"轻量 · 免费 · 零门槛查看",
         hero_title:"Revit 模型，一键导出为<br>无需安装的 3D 查看器",
         hero_sub:"ElementView 是一个轻量化的 3D viewer。从 Revit 导出的模型是独立可执行文件（EXE），也可以导出为网页（HTML），查看方不需要安装 Revit 或任何其他软件，双击或用浏览器打开即可查看。",
-        hero_dl_download:"立即下载", hero_cta_how:"查看使用流程",
-        hero_meta_revit:"支持 Revit 版本：", hero_meta_version:"最新版本：",
-        how_kicker:"使用流程", how_title:"三步完成交付", how_sub:"从 Revit 到可分享的独立查看器，只需几步。",
-        how1_title:"在 Revit 中导出", how1_desc:"安装插件，选择模型，一键导出为独立查看器。", how1_tag:"Revit",
-        how2_title:"得到独立 EXE / HTML", how2_desc:"生成可独立运行的可执行文件（EXE）或网页文件（HTML），内含全部模型数据。", how2_tag:"EXE / HTML",
-        how3_title:"发送给任何人", how3_desc:"通过邮件或网盘分享，对方在任意 Windows 上双击即用，无需安装。", how3_tag:"交付",
-        dl_kicker:"下载", dl_title:"立即获取 ElementView", dl_sub:"下载最新版 Revit 插件，把模型变成独立的 3D 查看器。",
-        dl_cta:"前往 GitHub Releases 下载", dl_need:"无需登录 · 免费 · Windows",
-        cl_kicker:"更新日志", cl_title:"近期更新", cl_placeholder:"更新日志占位，发布后可在此补充。",
-        cl_v2692:"支持 Revit 2020 – 2027 全版本。",
-        cl_v2691:"支持导出 HTML 网页。",
-        cl_v2690:"支持 Revit 2020 版本。",
-        cl_v2680:"Revit 一键导出，独立 EXE 双击即用。",
+        hero_dl_download:"立即下载", hero_cta_features:"查看核心功能",
+        hero_meta_revit:"支持 Revit 版本：",
+        ft_kicker:"核心功能", ft_title:"不只是查看", ft_sub:"测量、剖切、漫游、标注、导出报告——一个查看器全覆盖。",
+        f_measure_title:"模型测量",
+        f_measure_desc:"在模型上直接拾取点位测量长度，结果实时显示，方便工程核对与现场复核。",
+        f_measure_tag:"测量工具",
+        f_markup_title:"标注批注",
+        f_markup_desc:"文字、箭头、云线、矩形、椭圆等多种工具，多色画笔自由圈划，问题标记一目了然，标注内容可随 PDF 报告一并导出。",
+        f_markup_tag:"标注 · 云线 · 文字",
+        f_crop_title:"剖切裁剪",
+        f_crop_desc:"拖动剖切框即可裁剪模型，外部遮挡一键剥离，内部结构与重点区域看得更清楚。",
+        f_crop_tag:"剖切盒",
+        f_roam_title:"第一人称漫游",
+        f_roam_desc:"WASD 键盘加鼠标视角，像走在街道上一样进入模型，以人的尺度体验建筑与场地。",
+        f_roam_tag:"漫游 · WASD",
+        f_pdf_title:"一键导出 PDF 报告",
+        f_pdf_desc:"把当前视图连同标注一起导出为 PDF，多页自动排版，交付、存档、打印都方便。",
+        f_pdf_tag:"PDF · 报告",
+        dl_kicker:"下载", dl_title:"立即获取 ElementView", dl_sub:"下载 Revit 插件安装包，或先用样例模型体验独立 3D 查看器。",
+        dl_cta_setup:"下载 Revit 插件安装包", dl_cta_sample:"下载样例模型", dl_need:"无需登录 · 免费 · Windows",
         fb_kicker:"反馈", fb_title:"分享你的建议", fb_sub:"有想法或遇到问题？欢迎到 GitHub Discussions 提交反馈，你的意见将帮助我们持续优化 ElementView。", fb_cta:"打开 GitHub Discussions",
         ft_repo:"插件仓库", ft_nav:"导航", ft_about:"ElementView：让 Revit 模型以轻量、独立、零安装的方式交付给每一个人。"
       },
       "en": {
-        nav_how:"How it works", nav_download:"Download", nav_feedback:"Feedback",
+        nav_features:"Features", nav_download:"Download", nav_feedback:"Feedback",
         hero_badge:"Lightweight · Free · Zero-install viewing",
         hero_title:"Export Revit models to a 3D viewer<br>that needs no installation",
         hero_sub:"ElementView is a lightweight 3D viewer. Models exported from Revit become a standalone executable (EXE) or an HTML page — recipients need neither Revit nor any other software. Just double-click or open it in a browser.",
-        hero_dl_download:"Download now", hero_cta_how:"See how it works",
-        hero_meta_revit:"Supported Revit version: ", hero_meta_version:"Latest version: ",
-        how_kicker:"How it works", how_title:"Deliver in three steps", how_sub:"From Revit to a shareable standalone viewer in minutes.",
-        how1_title:"Export in Revit", how1_desc:"Install the plugin, pick a model, and export a standalone viewer in one click.", how1_tag:"Revit",
-        how2_title:"Get a standalone EXE / HTML", how2_desc:"A self-contained executable (EXE) or HTML page is produced, with all model data embedded.", how2_tag:"EXE / HTML",
-        how3_title:"Send to anyone", how3_desc:"Share by email or cloud link; anyone on Windows just double-clicks to open it.", how3_tag:"Deliver",
-        dl_kicker:"Download", dl_title:"Get ElementView now", dl_sub:"Download the latest Revit plugin and turn models into standalone 3D viewers.",
-        dl_cta:"Go to GitHub Releases", dl_need:"No sign-up · Free · Windows",
-        cl_kicker:"Changelog", cl_title:"Recent updates", cl_placeholder:"Changelog placeholder — fill in after a release.",
-        cl_v2691:"Now supports exporting HTML pages.",
-        cl_v2690:"Now supports Revit 2020.",
-        cl_v2680:"One-click Revit export into a standalone EXE — just double-click and it runs.",
+        hero_dl_download:"Download now", hero_cta_features:"See features",
+        hero_meta_revit:"Supported Revit version: ",
+        ft_kicker:"Features", ft_title:"More than just viewing", ft_sub:"Measure, clip, walk through, annotate, and export reports — all in one viewer.",
+        f_measure_title:"Measuring",
+        f_measure_desc:"Pick two points on the model to measure distances, displayed in real time — handy for engineering checks and site verification.",
+        f_measure_tag:"Measure",
+        f_markup_title:"Markup & annotation",
+        f_markup_desc:"Text, arrows, revision clouds, rectangles, ellipses and more, with multi-color pens for freehand circling. Mark issues clearly — and export them together with the PDF report.",
+        f_markup_tag:"Markup · Clouds · Text",
+        f_crop_title:"Section clipping",
+        f_crop_desc:"Drag the section box to clip the model and strip away exterior occlusion — interior structures and key areas become instantly clear.",
+        f_crop_tag:"Section box",
+        f_roam_title:"First-person walkthrough",
+        f_roam_desc:"WASD keys plus mouse look let you walk into the model like strolling down the street, experiencing the building at human scale.",
+        f_roam_tag:"Walkthrough · WASD",
+        f_pdf_title:"One-click PDF reports",
+        f_pdf_desc:"Export the current view together with all markups into a multi-page, auto-formatted PDF — easy to deliver, archive, and print.",
+        f_pdf_tag:"PDF · Reports",
+        dl_kicker:"Download", dl_title:"Get ElementView now", dl_sub:"Download the Revit plugin installer, or try the sample model to see a standalone 3D viewer in action.",
+        dl_cta_setup:"Download Revit plugin installer", dl_cta_sample:"Download sample model", dl_need:"No sign-up · Free · Windows",
         fb_kicker:"Feedback", fb_title:"Share your feedback", fb_sub:"Have ideas or run into issues? Open a discussion on GitHub — your feedback helps us make ElementView better.", fb_cta:"Open GitHub Discussions",
         ft_repo:"Plugin repository", ft_nav:"Navigate", ft_about:"ElementView: deliver Revit models as lightweight, standalone, zero-install experiences for everyone."
       }
